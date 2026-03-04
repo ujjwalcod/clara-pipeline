@@ -5,6 +5,10 @@
 VIDEO LINK:
 https://www.loom.com/share/03833377d20d48f38c24ea4de1f7b34f
 
+
+
+DASHBOARD:
+
 <img width="1914" height="907" alt="image" src="https://github.com/user-attachments/assets/ca7cb98d-6294-4749-a4fe-d30e5f5662a4" />
 
 <img width="1919" height="901" alt="image" src="https://github.com/user-attachments/assets/96c26a96-b07a-4805-99c9-0b38c9ebae3e" />
