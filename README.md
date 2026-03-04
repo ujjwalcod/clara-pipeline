@@ -194,6 +194,16 @@ Set `RETELL_API_KEY` in `.env`. The pipeline already generates a spec that maps 
 Switch provider: `LLM_PROVIDER=groq|gemini|ollama` in `.env`
 
 ---
+##retell.ai
+ Create a free account at **https://app.retell.ai**
+Retell Manual Import
+
+   - Open app.retell.ai → Create Agent
+   - Copy `system_prompt` from `agent_spec.json`
+   - Paste into the agent's system prompt field
+   - Set voice to "professional warm"
+   - Configure transfer number from `key_variables.emergency_contacts`
+   - Save and test
 
 ## Known Limitations
 
