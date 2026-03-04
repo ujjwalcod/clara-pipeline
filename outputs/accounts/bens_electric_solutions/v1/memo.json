@@ -1,0 +1,90 @@
+{
+  "account_id": "bens_electric_solutions",
+  "_version": "v1",
+  "_source": "demo_call",
+  "_extracted_at": "2026-01-08T18:30:00Z",
+  "company_name": "Ben's Electric Solutions",
+  "owner": "Ben Penoyer",
+  "contact_email": "ben@benselectricsolutionsteam.com",
+  "office_address": "Calgary, Alberta, Canada",
+  "business_hours": {
+    "days": [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday"
+    ],
+    "start_time": "08:00",
+    "end_time": "17:00",
+    "timezone": "America/Edmonton",
+    "notes": "Exact closing time not confirmed on demo call"
+  },
+  "services_supported": [
+    "Service calls",
+    "Outlet replacement and aluminum wiring mitigation",
+    "EV charger installation",
+    "Hot tub hookup and electrical",
+    "Panel changes",
+    "Fixture replacement",
+    "Lighting upgrades (LED)",
+    "Renovations and troubleshooting",
+    "Custom home builds",
+    "Tenant improvements",
+    "Generator hookups",
+    "Residential and commercial electrical"
+  ],
+  "services_not_supported": [
+    "Gemstone lights",
+    "Full pool installation (plumbing only)",
+    "Full hot tub installation (electrical only)"
+  ],
+  "team": {
+    "owner": "Ben Penoyer",
+    "journeymen": 3,
+    "apprentices": 1,
+    "subcontractors": 2,
+    "operations_manager_incoming": "Greg (last name unknown)"
+  },
+  "crm": "Jobber",
+  "accounting": "QuickBooks",
+  "call_volume_estimate": "20-50 calls per week",
+  "emergency_definition": [
+    "Gas station pump failure (VIP customer only)",
+    "Active electrical emergency for known property managers or general contractors"
+  ],
+  "emergency_routing_rules": [
+    {
+      "priority": 1,
+      "contact_name": "Ben Penoyer",
+      "phone_number": "main business number (personal)",
+      "method": "call",
+      "notes": "Ben is sole on-call contact after hours. Only for known/existing clients."
+    }
+  ],
+  "non_emergency_routing_rules": {
+    "during_hours": "Clara collects caller details and job info, sends summary to Ben via email/SMS",
+    "after_hours": "Clara collects details and informs caller that someone will follow up next business day"
+  },
+  "call_transfer_rules": {
+    "timeout_seconds": null,
+    "retries": null,
+    "transfer_fail_action": "Take message and assure callback",
+    "what_to_say_if_fail": "I wasn't able to connect you right now. I've taken your details and someone will be in touch shortly."
+  },
+  "integration_constraints": [
+    "Jobber CRM integration with Clara is in progress \u2014 not yet live",
+    "Do not auto-create Jobber jobs \u2014 Ben reviews and books manually",
+    "Clara does not have access to Jobber calendar for scheduling confirmation"
+  ],
+  "after_hours_flow_summary": "Greet caller, identify if emergency or non-emergency. For emergencies from known clients, route to Ben. For all others, collect name, number, and issue details, confirm follow-up next business day.",
+  "office_hours_flow_summary": "Greet caller, collect name, callback number, and nature of job. Route or transfer to Ben. Send post-call summary via email and SMS. Mention service call fee only if customer asks.",
+  "questions_or_unknowns": [
+    "Exact business hours closing time not confirmed (approx 5 PM from demo)",
+    "Ben's second personal number not yet set up \u2014 transfer destination TBD",
+    "Greg's contact details (operations manager) unknown",
+    "Whitelist of VIP/contractor numbers not defined",
+    "Pricing details not mentioned in demo call"
+  ],
+  "notes": "Ben is first-time AI user. Very positive demo reaction. Signed 3-month starter plan at $249/month. Sole proprietor, sole admin, growing to 5 vans. Uses Jobber + QuickBooks."
+}

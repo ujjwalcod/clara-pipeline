@@ -1,0 +1,115 @@
+{
+  "account_id": "bens_electric_solutions",
+  "updated_at": "2026-01-09T14:30:00Z",
+  "source": "onboarding_call_jan_9_2026",
+  "summary": "13 fields updated: business hours confirmed, pricing added, VIP customer G&M Pressure Washing defined, notification channels confirmed, transfer setup clarified, contact email updated.",
+  "changes": [
+    {
+      "field": "business_hours.end_time",
+      "old_value": "17:00",
+      "new_value": "16:30",
+      "reason": "Confirmed by Ben on onboarding call as 8:00 AM to 4:30 PM"
+    },
+    {
+      "field": "contact_email",
+      "old_value": "ben@benselectricsolutionsteam.com",
+      "new_value": "info@benselectricsolutionsteam.com",
+      "reason": "Ben confirmed info@ is the preferred business notification email"
+    },
+    {
+      "field": "notification_email",
+      "old_value": null,
+      "new_value": "info@benselectricsolutionsteam.com",
+      "reason": "New field \u2014 confirmed on onboarding call"
+    },
+    {
+      "field": "notification_sms",
+      "old_value": null,
+      "new_value": "Ben's main business number",
+      "reason": "Confirmed: SMS + email both sent after every call"
+    },
+    {
+      "field": "pricing",
+      "old_value": null,
+      "new_value": {
+        "service_call_fee": 115,
+        "hourly_rate": 98,
+        "billing_increment_hours": 0.5
+      },
+      "reason": "Pricing details not discussed in demo \u2014 confirmed fully on onboarding call"
+    },
+    {
+      "field": "vip_customers",
+      "old_value": null,
+      "new_value": "G&M Pressure Washing \u2013 Shelley Manley \u2013 403-870-8494",
+      "reason": "Onboarding confirmed G&M Pressure Washing as sole after-hours emergency VIP"
+    },
+    {
+      "field": "emergency_routing_rules[0].phone_number",
+      "old_value": "main business number (personal)",
+      "new_value": "Ben's second personal number (pending setup)",
+      "reason": "Ben setting up separate personal number \u2014 transfer will go there once ready"
+    },
+    {
+      "field": "call_transfer_rules.timeout_seconds",
+      "old_value": null,
+      "new_value": 30,
+      "reason": "Standard 30s timeout confirmed during onboarding"
+    },
+    {
+      "field": "call_setup",
+      "old_value": null,
+      "new_value": {
+        "device": "Android",
+        "forwarding_method": "forward-on-no-answer"
+      },
+      "reason": "Confirmed Android device \u2014 call forwarding on no-answer until second number ready"
+    },
+    {
+      "field": "after_hours_flow_summary",
+      "old_value": "Generic after-hours flow",
+      "new_value": "VIP G&M Pressure Washing patched through to Ben. All others: collect details and follow up next business day.",
+      "reason": "Specific VIP routing rule confirmed on onboarding"
+    },
+    {
+      "field": "office_hours_flow_summary",
+      "old_value": "Collect details and send to Ben",
+      "new_value": "Collect details, mention pricing only if asked, attempt transfer if customer insists, send post-call email+SMS",
+      "reason": "Pricing mention policy and transfer behavior confirmed on onboarding"
+    },
+    {
+      "field": "questions_or_unknowns",
+      "old_value": [
+        "Exact business hours closing time",
+        "Ben's second number",
+        "Greg's contact",
+        "Whitelist numbers",
+        "Pricing details"
+      ],
+      "new_value": [
+        "Ben's second personal number TBD",
+        "Greg's full contact details not provided",
+        "Full VIP contractor list not provided"
+      ],
+      "reason": "Most unknowns resolved. Three items still pending."
+    },
+    {
+      "field": "integration_constraints",
+      "old_value": [
+        "Jobber integration in progress",
+        "No auto-create jobs"
+      ],
+      "new_value": [
+        "Jobber integration in progress",
+        "No auto-create jobs",
+        "Clara trained on website for FAQ",
+        "Cannot confirm appointment slots \u2014 no calendar access"
+      ],
+      "reason": "Additional constraints clarified on onboarding call"
+    }
+  ],
+  "unresolved_conflicts": [
+    "Ben's second personal number not yet available \u2014 transfer destination cannot be finalized until provided",
+    "Greg's role as operations manager not yet active \u2014 no routing rules for Greg yet"
+  ]
+}

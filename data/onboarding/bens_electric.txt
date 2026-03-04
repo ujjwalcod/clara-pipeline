@@ -1,0 +1,72 @@
+Onboarding Call Transcript – Ben's Electric Solutions
+Date: January 9, 2026 (Kickoff Call)
+Participants: Bharat (Clara), Pawan (Clara Onboarding Specialist), Ben Penoyer (Owner)
+
+---
+
+[Context: Kickoff/onboarding call after Ben signed the DocuSign contract. Purpose is to finalize
+Clara agent configuration before going live.]
+
+--- CONFIRMED OPERATIONAL DETAILS ---
+
+BUSINESS HOURS:
+- Monday to Friday, 8:00 AM to 4:30 PM (approx 8:00–5:00)
+- Timezone: America/Edmonton (Calgary, Alberta, Canada – Mountain Time)
+- After hours: all other times
+
+CONTACT & NOTIFICATION:
+- Notification email: info@benselectricsolutionsteam.com
+- SMS notifications: same as main business phone number
+- Owner: Ben Penoyer
+
+CALL HANDLING – OFFICE HOURS:
+- During office hours, all incoming calls forwarded to Clara (call forwarding setup on Android phone)
+- Ben is sole person handling new customer calls during office hours
+- Existing contractors/builders call team members directly — not routed through Clara
+- Clara handles: new clients, service inquiries, small job requests, quote requests
+- Clara should NOT screen calls from existing known contractors (they call field team directly)
+
+PRICING (mention only if customer asks):
+- Service call fee (call-out): $115
+- Hourly rate: $98/hour (billed in 30-minute increments = $49 per half hour)
+- First visit total: $115 call-out + $98/hr after
+- Clara should mention pricing only when customer asks — do NOT proactively state on every call
+
+CALL ROUTING – OFFICE HOURS:
+- Clara takes the call, collects caller details and job info
+- Sends email + SMS notification to Ben after each call
+- If caller insists on speaking to a live person: transfer to Ben's second personal number (TBD — Ben getting new number soon)
+- Until second number is ready: call forwarding only if Ben does not answer (do-not-answer forwarding)
+
+CALL HANDLING – AFTER HOURS:
+- General policy: NO emergency dispatch after hours
+- Exception: ONE VIP customer — G&M Pressure Washing (property manager, Shelley Manley)
+  - Contact: Shelley Manley
+  - Company: G&M Pressure Washing (acts as property manager)
+  - Phone: 403-870-8494
+  - Email: gm_pressurewash@yahoo.ca
+  - Properties managed: ~20 Chevron and Esso gas stations around Calgary
+  - Emergency type: Gas station electrical failures (pumps down, lighting, power issues)
+  - When they call after hours: collect location/address of gas station, patch call through to Ben
+- For all other after-hours calls: collect name, number, and job details. Inform caller that
+  someone will follow up next business day.
+
+INTEGRATION:
+- CRM: Jobber (integration with Clara in progress / not yet live)
+- Accounting: QuickBooks (invoicing through Jobber)
+- Post-call: email + SMS to Ben with call summary, caller details, intent, preferred job date/time
+
+AGENT SETUP PLAN:
+- Clara trained on Ben's Electric website content for services and FAQs
+- Testing phase: Ben will call agent number and test before going live
+- Go-live target: weekend after kickoff call
+- Follow-up call scheduled: Friday 2:00 PM
+
+SECOND NUMBER (pending):
+- Ben is setting up a separate personal number
+- Once available, Clara will transfer callers who request a human to that number
+- Until then: forward-on-no-answer only
+
+CHAT LOG DETAILS (from meeting chat):
+- Notification email confirmed: info@benselectricsolutionsteam.com
+- VIP customer: G&M Pressure Washing, Shelley Manley, 403-870-8494, gm_pressurewash@yahoo.ca

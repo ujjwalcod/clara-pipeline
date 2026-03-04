@@ -1,0 +1,185 @@
+{
+  "name": "Clara Answers – Full Pipeline",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "pipeline-a",
+        "responseMode": "responseNode"
+      },
+      "id": "webhook-pipeline-a",
+      "name": "Webhook – Pipeline A (Demo Call)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "pipeline-b",
+        "responseMode": "responseNode"
+      },
+      "id": "webhook-pipeline-b",
+      "name": "Webhook – Pipeline B (Onboarding)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 500]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Read transcript from incoming webhook body\nconst body = $input.first().json;\nconst transcript = body.transcript || body.text || '';\nconst accountIdOverride = body.account_id || null;\n\nif (!transcript) throw new Error('No transcript provided in request body');\n\nreturn [{ json: { transcript, accountIdOverride, source: body.source || 'webhook' } }];\n"
+      },
+      "id": "prep-a",
+      "name": "Prepare Transcript (A)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.groq.com/openai/v1/chat/completions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "model",
+              "value": "llama-3.3-70b-versatile"
+            },
+            {
+              "name": "messages",
+              "value": "={{ JSON.stringify([{role:'system',content:$node['Load Extraction Prompt'].json.prompt},{role:'user',content:'Extract the Account Memo JSON from this transcript:\\n\\n'+$json.transcript}]) }}"
+            },
+            { "name": "temperature", "value": "0.1" },
+            { "name": "max_tokens",  "value": "4096" }
+          ]
+        }
+      },
+      "id": "llm-extract",
+      "name": "LLM – Extract Memo (Groq)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = $input.first().json.choices[0].message.content;\nlet parsed;\ntry {\n  const cleaned = raw.replace(/```json|```/g,'').trim();\n  const start = cleaned.indexOf('{');\n  const end   = cleaned.lastIndexOf('}') + 1;\n  parsed = JSON.parse(cleaned.substring(start, end));\n} catch(e) {\n  throw new Error('Failed to parse LLM JSON: ' + e.message);\n}\n\n// Normalise account_id\nif (parsed.company_name && !parsed.account_id) {\n  parsed.account_id = parsed.company_name.toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,'');\n}\nparsed._version = 'v1';\nparsed._extracted_at = new Date().toISOString();\n\nreturn [{ json: { memo: parsed, account_id: parsed.account_id } }];\n"
+      },
+      "id": "parse-memo",
+      "name": "Parse Memo JSON",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.groq.com/openai/v1/chat/completions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "model",       "value": "llama-3.3-70b-versatile" },
+            {
+              "name": "messages",
+              "value": "={{ JSON.stringify([{role:'system',content:$node['Load Agent Prompt'].json.prompt},{role:'user',content:'Generate the Retell Agent Spec JSON for this memo:\\n\\n'+JSON.stringify($json.memo,null,2)}]) }}"
+            },
+            { "name": "temperature", "value": "0.1" },
+            { "name": "max_tokens",  "value": "4096" }
+          ]
+        }
+      },
+      "id": "llm-agent",
+      "name": "LLM – Generate Agent Spec (Groq)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1120, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const memoData  = $node['Parse Memo JSON'].json;\nconst agentRaw  = $input.first().json.choices[0].message.content;\nlet agentSpec;\ntry {\n  const cleaned = agentRaw.replace(/```json|```/g,'').trim();\n  const start = cleaned.indexOf('{');\n  const end   = cleaned.lastIndexOf('}') + 1;\n  agentSpec = JSON.parse(cleaned.substring(start, end));\n} catch(e) {\n  throw new Error('Failed to parse agent spec: ' + e.message);\n}\nagentSpec.version = 'v1';\nreturn [{ json: { account_id: memoData.account_id, memo: memoData.memo, agent_spec: agentSpec } }];\n"
+      },
+      "id": "parse-agent",
+      "name": "Parse Agent Spec JSON",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1340, 300]
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "={{ '/outputs/accounts/' + $json.account_id + '/v1/memo.json' }}",
+        "dataPropertyName": "memo",
+        "encoding": "utf8"
+      },
+      "id": "save-memo-v1",
+      "name": "Save memo.json (v1)",
+      "type": "n8n-nodes-base.writeBinaryFile",
+      "typeVersion": 1,
+      "position": [1560, 240]
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "={{ '/outputs/accounts/' + $json.account_id + '/v1/agent_spec.json' }}",
+        "dataPropertyName": "agent_spec",
+        "encoding": "utf8"
+      },
+      "id": "save-agent-v1",
+      "name": "Save agent_spec.json (v1)",
+      "type": "n8n-nodes-base.writeBinaryFile",
+      "typeVersion": 1,
+      "position": [1560, 360]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ status: 'success', account_id: $json.account_id, version: 'v1' }) }}"
+      },
+      "id": "respond-a",
+      "name": "Respond – Pipeline A",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1780, 300]
+    }
+  ],
+  "connections": {
+    "Webhook – Pipeline A (Demo Call)": {
+      "main": [[{ "node": "Prepare Transcript (A)", "type": "main", "index": 0 }]]
+    },
+    "Prepare Transcript (A)": {
+      "main": [[{ "node": "LLM – Extract Memo (Groq)", "type": "main", "index": 0 }]]
+    },
+    "LLM – Extract Memo (Groq)": {
+      "main": [[{ "node": "Parse Memo JSON", "type": "main", "index": 0 }]]
+    },
+    "Parse Memo JSON": {
+      "main": [[{ "node": "LLM – Generate Agent Spec (Groq)", "type": "main", "index": 0 }]]
+    },
+    "LLM – Generate Agent Spec (Groq)": {
+      "main": [[{ "node": "Parse Agent Spec JSON", "type": "main", "index": 0 }]]
+    },
+    "Parse Agent Spec JSON": {
+      "main": [[
+        { "node": "Save memo.json (v1)",       "type": "main", "index": 0 },
+        { "node": "Save agent_spec.json (v1)", "type": "main", "index": 0 }
+      ]]
+    },
+    "Save agent_spec.json (v1)": {
+      "main": [[{ "node": "Respond – Pipeline A", "type": "main", "index": 0 }]]
+    }
+  },
+  "_meta": {
+    "description": "Clara Answers – Demo Call to Agent v1 (Pipeline A). Import into n8n via Settings > Import Workflow.",
+    "version": "1.0.0"
+  }
+}

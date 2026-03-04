@@ -1,0 +1,41 @@
+Demo Call Transcript – Apex Fire Protection
+Date: 2024-11-12
+Participants: Sales Rep (Clara), Client Contact – Mike Tanner (Operations Manager)
+
+---
+
+Clara: Hi Mike, thanks for taking the time today. I wanted to show you how Clara Answers can transform how Apex Fire handles inbound calls, especially after hours.
+
+Mike: Yeah, we've been struggling with that. We get calls at all hours — sprinkler emergencies, people panicking, and nobody's there to pick up.
+
+Clara: That's exactly what we solve. Can you tell me a bit about your typical call volume and what happens right now when someone calls after hours?
+
+Mike: So we're open Monday through Friday, 8 AM to 5 PM, Central time. Outside of those hours, calls just go to voicemail. And honestly, half the time people don't leave messages because they're scared. Or they call back the next morning when the situation has already gotten bad.
+
+Clara: That makes sense. And what qualifies as an emergency for Apex? Like, what would you want the AI to escalate immediately?
+
+Mike: Anything involving an active sprinkler discharge — that's the big one. Or a fire alarm going off. Basically if there's water or smoke, we want someone on the phone immediately. Less urgent stuff like scheduling an inspection, or a customer asking about pricing — that can wait until business hours.
+
+Clara: Got it. So sprinkler discharge and active fire alarm are your emergency triggers. When you get one of those after hours, who do you call?
+
+Mike: We have a rotating on-call tech. Right now that's Dave Kowalski. His cell is 312-555-0147. If Dave doesn't answer within two rings, the backup is our dispatch line which goes to our answering service.
+
+Clara: And what's the dispatch number?
+
+Mike: That's 312-555-0200. 
+
+Clara: Perfect. Now in terms of systems — do you use ServiceTrade?
+
+Mike: Yeah, we use it for scheduling and job tracking. But here's the thing — sprinkler jobs are very specific. We never want the AI or any system to automatically create a ServiceTrade job for a sprinkler call. We handle those manually.
+
+Clara: Understood. I'll flag that as a hard constraint — no automated ServiceTrade job creation for sprinkler-related calls. What about your office address — is that relevant for callers?
+
+Mike: We're at 4820 West Armitage, Chicago, IL 60639. Sometimes people drop off equipment so it helps if the agent can tell them.
+
+Clara: Great. One last thing — what would you want the agent to do if it can't reach Dave or dispatch during an emergency? 
+
+Mike: Take down their name, number, and the address of the problem, and tell them someone will call back within 15 minutes. That usually calms people down enough.
+
+Clara: That's all super helpful. Let me show you what the Clara agent would actually sound like in these scenarios...
+
+[Live demo continues – transcript ends]

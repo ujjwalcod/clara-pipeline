@@ -1,0 +1,93 @@
+Demo Call Transcript – Ben's Electric Solutions
+Date: January 8, 2026
+Participants: Bharat (Clara Solutions), Nick (Clara), Ben Penoyer (Owner, Ben's Electric Solutions)
+
+---
+
+[Context: Introductory demo call. Ben has been running his electrical business for 8 years, electrician for 30 years. Solo proprietor based in Calgary, Alberta, Canada.]
+
+Bharat: Ben, how long have you been in this business?
+
+Ben: I've been working for myself for about eight years now. I've been an electrician for 30 years. I just have a couple guys, couple vans out on the road. Do a lot of the admin and back end stuff myself. I've got another guy coming on as operations manager to help me out. His name is Greg.
+
+Bharat: What kind of jobs do you do?
+
+Ben: Everything. Service calls, small jobs, odd jobs. Renovations, troubleshooting. Full projects like new custom homes or tenant improvements. EV chargers, hot tub hookups, panel changes. All that service maintenance stuff. We do residential and commercial.
+
+Bharat: What systems do you use?
+
+Ben: I use Jobber as my CRM. It's fantastic. I also use QuickBooks for accounting and invoicing flows through Jobber.
+
+Bharat: What are your business hours?
+
+Ben: Most calls are business hours. I occasionally get calls after hours and weekends. We're not equipped for emergency services except for some regular property managers and general contractors — we'll get out there for emergency calls for them. If someone I don't know has an emergency call on the weekend, I'll defer them elsewhere.
+
+Bharat: Do you have someone on call after hours?
+
+Ben: I'm the one on call. I have one property manager — they run some gas stations. If their pumps go down, they've got to be fixed now. I get out there for that. I don't have any of my guys on call.
+
+[Live demo of Clara agent performed — Ben called a demo number and tested the AI agent]
+
+Ben: That was actually pretty good. You can tell right away you're talking to a computer but who cares — it answered all my questions. I tried interrupting her. I requested a time that we're not actually open and it handled it. I like that.
+
+Bharat: The system can take 20-30 calls simultaneously, speak multiple languages, and handle smart escalations — routing calls to specific team members based on the type of call.
+
+Ben: How does it handle calls that get routed to me personally?
+
+Bharat: We can configure certain numbers to bypass screening entirely — personal numbers, VIP customers. For others, Clara can screen and ask a qualifying question before routing.
+
+Ben: What's the pricing?
+
+Bharat: Starter plan is $249/month for 500 minutes. We can start with a 3-month plan.
+
+Ben: I'd like to try it for three months. That sounds pretty good.
+
+[Ben agreed to proceed. Kickoff call scheduled for next day, noon.]
+
+--- KEY OPERATIONAL DETAILS FROM DEMO ---
+
+Company: Ben's Electric Solutions
+Owner: Ben Penoyer
+Contact Email: ben@benselectricsolutionsteam.com
+Location: Calgary, Alberta, Canada
+Business Type: Electrical contractor — residential and commercial
+
+Services:
+- Service calls and small jobs
+- Renovations and troubleshooting
+- Custom home builds / tenant improvements
+- EV charger installation
+- Hot tub hookups
+- Panel changes
+- Fixture replacement
+- Outlet replacement / aluminum wiring mitigation
+- Lighting upgrades (LED)
+- NOT doing: Gemstone lights (turned down), full pool installation
+
+Team:
+- Ben Penoyer (Owner/operator, on-call after hours)
+- 3 journeymen (each with a company van)
+- 1 apprentice (currently hiring)
+- Greg (incoming operations manager/estimator)
+- 2 subcontractors (used for overflow)
+
+CRM: Jobber
+Accounting: QuickBooks (invoicing through Jobber)
+Jobber integration with Clara: in progress / coming soon
+
+Call Volume: Approximately 20–50 calls per week
+After-hours emergency: Ben is sole on-call contact
+Emergency callers (known): One property manager (gas station operator) — emergency calls get immediate response
+Non-emergency after hours: Defer to next business day or refer elsewhere
+
+Call routing preferences:
+- Clara answers most business calls
+- Certain numbers bypass Clara (personal/VIP contacts)
+- Ben wants to whitelist Greg and key contractors for direct routing
+
+Notes:
+- Ben has NOT used any AI tools before — first exposure to AI voice agents
+- Previously used a human virtual assistant (Toronto-based) for data entry, didn't work well
+- Very positive reaction to the demo — signed up for 3-month starter plan
+- Plan: $249/month, 500 min/month, 3 months, billed upfront
+- Kickoff call scheduled with onboarding team

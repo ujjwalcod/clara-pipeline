@@ -1,0 +1,117 @@
+{
+  "account_id": "bens_electric_solutions",
+  "_version": "v2",
+  "_source": "onboarding_call",
+  "_extracted_at": "2026-01-09T14:00:00Z",
+  "company_name": "Ben's Electric Solutions",
+  "owner": "Ben Penoyer",
+  "contact_email": "info@benselectricsolutionsteam.com",
+  "notification_email": "info@benselectricsolutionsteam.com",
+  "notification_sms": "Ben's main business number",
+  "office_address": "Calgary, Alberta, Canada",
+  "business_hours": {
+    "days": [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday"
+    ],
+    "start_time": "08:00",
+    "end_time": "16:30",
+    "timezone": "America/Edmonton",
+    "notes": "Confirmed 8:00 AM to 4:30 PM Mountain Time"
+  },
+  "services_supported": [
+    "Service calls",
+    "Outlet replacement and aluminum wiring mitigation",
+    "EV charger installation",
+    "Hot tub hookup and electrical",
+    "Panel changes",
+    "Fixture replacement",
+    "Lighting upgrades (LED)",
+    "Renovations and troubleshooting",
+    "Custom home builds",
+    "Tenant improvements",
+    "Generator hookups",
+    "Residential and commercial electrical"
+  ],
+  "services_not_supported": [
+    "Gemstone lights",
+    "Full pool installation (plumbing only)",
+    "Full hot tub installation (electrical only)"
+  ],
+  "team": {
+    "owner": "Ben Penoyer",
+    "journeymen": 3,
+    "apprentices": 1,
+    "subcontractors": 2,
+    "operations_manager_incoming": "Greg (last name unknown)"
+  },
+  "crm": "Jobber",
+  "accounting": "QuickBooks",
+  "call_volume_estimate": "20-50 calls per week",
+  "pricing": {
+    "service_call_fee": 115,
+    "hourly_rate": 98,
+    "billing_increment_hours": 0.5,
+    "half_hour_rate": 49,
+    "currency": "CAD",
+    "mention_policy": "Only mention pricing when customer asks \u2014 do not proactively state on every call"
+  },
+  "emergency_definition": [
+    "Gas station pump failure or electrical outage (VIP customer G&M Pressure Washing only)",
+    "Active electrical emergency for known property managers or general contractors"
+  ],
+  "emergency_routing_rules": [
+    {
+      "priority": 1,
+      "contact_name": "Ben Penoyer",
+      "phone_number": "Ben's second personal number (pending setup)",
+      "method": "call transfer",
+      "notes": "Only for VIP customer G&M Pressure Washing / Shelley Manley. Collect gas station address/location before transferring."
+    }
+  ],
+  "vip_customers": [
+    {
+      "company": "G&M Pressure Washing",
+      "contact_name": "Shelley Manley",
+      "phone": "403-870-8494",
+      "email": "gm_pressurewash@yahoo.ca",
+      "type": "Property manager",
+      "properties": "~20 Chevron and Esso gas stations across Calgary",
+      "emergency_treatment": "Patch call through to Ben after hours. Collect gas station address first.",
+      "notes": "They manage gas stations \u2014 electrical failures at pumps are emergencies"
+    }
+  ],
+  "non_emergency_routing_rules": {
+    "during_hours": "Clara collects caller name, number, and job details. Sends email + SMS to Ben. Transfer to Ben's second number if caller insists on speaking to someone.",
+    "after_hours": "For non-VIP: collect name, number, job details. Inform caller team will follow up next business day. For VIP G&M Pressure Washing: treat as emergency \u2014 collect gas station address and patch through to Ben."
+  },
+  "call_transfer_rules": {
+    "timeout_seconds": 30,
+    "retries": 1,
+    "transfer_destination": "Ben's second personal number (TBD \u2014 pending setup)",
+    "transfer_fail_action": "Take message and assure callback",
+    "what_to_say_if_fail": "I wasn't able to connect you right now, but I've taken your details and Ben will follow up with you as soon as possible."
+  },
+  "integration_constraints": [
+    "Jobber CRM integration with Clara is in progress \u2014 not yet live",
+    "Do not auto-create Jobber jobs \u2014 Ben reviews and books manually",
+    "Clara does not have access to Jobber calendar \u2014 cannot confirm appointment slots",
+    "Clara trained on Ben's Electric website for services and FAQs"
+  ],
+  "call_setup": {
+    "device": "Android",
+    "forwarding_method": "Forward-on-no-answer until second number ready, then full forwarding to Clara",
+    "second_number_status": "Pending \u2014 Ben setting up new personal number"
+  },
+  "after_hours_flow_summary": "Greet caller, note office is closed. Ask purpose of call. If caller is from G&M Pressure Washing / Shelley Manley (or mentions Chevron/Esso gas station emergency): collect gas station address and patch through to Ben. For all other callers: collect name, callback number, and description of issue. Confirm team will follow up next business day by start of business hours.",
+  "office_hours_flow_summary": "Greet caller as Ben's Electric Solutions. Ask purpose of call. Collect name and callback number. Describe service briefly. Mention pricing only if asked ($115 call-out, $98/hr billed in 30-min increments). Attempt transfer to Ben if caller insists on speaking live. If transfer fails or not needed, confirm details received and team will be in touch. Send post-call email + SMS to Ben.",
+  "questions_or_unknowns": [
+    "Ben's second personal number not yet confirmed \u2014 transfer destination still TBD",
+    "Greg's full name and contact details not provided",
+    "Exact list of VIP contractor numbers not provided \u2014 only G&M Pressure Washing confirmed"
+  ],
+  "notes": "Onboarding completed. Business hours confirmed 8AM-4:30PM MT Mon-Fri. Pricing confirmed. G&M Pressure Washing is sole after-hours VIP. Testing phase begins immediately. Go-live target: weekend of Jan 11-12, 2026. Follow-up call Friday Jan 10 at 2PM."
+}

@@ -1,0 +1,63 @@
+Onboarding Call Transcript – Apex Fire Protection
+Date: 2024-11-22
+Participants: Onboarding Specialist (Clara Team), Mike Tanner, Dave Kowalski
+
+---
+
+Onboarding Specialist: Hi Mike, hi Dave — thanks for joining the onboarding call. Today we want to lock in all the operational details for your Clara agent. Let's go field by field.
+
+Mike: Sounds great. Dave is here too because he's the one taking the after-hours calls.
+
+Onboarding Specialist: Perfect. First let's confirm business hours.
+
+Mike: Monday through Friday, 8 AM to 5 PM Central. Correct. We're closed all major holidays too — I can send you a list but the agent should default to closed on New Year's, Memorial Day, Independence Day, Labor Day, Thanksgiving, and Christmas.
+
+Onboarding Specialist: Got it. Timezone is America/Chicago?
+
+Mike: Yes.
+
+Onboarding Specialist: Now the emergency triggers — in the demo call you mentioned sprinkler discharge and active fire alarm. Are there any others?
+
+Mike: We should add CO alarm — carbon monoxide. That's also an emergency.
+
+Dave: And suppression system activation. That's different from a sprinkler but it's the same level of urgency.
+
+Onboarding Specialist: Great. So emergencies are: active sprinkler discharge, fire alarm activation, CO alarm, and suppression system activation. Confirmed?
+
+Mike: Yes, confirmed.
+
+Onboarding Specialist: Emergency contacts — Mike, you said Dave Kowalski at 312-555-0147. Is that still current?
+
+Dave: Actually my number changed. New number is 773-555-0293.
+
+Onboarding Specialist: Updated. And the backup dispatch line?
+
+Mike: Same — 312-555-0200. But I want to add a third fallback. If dispatch doesn't answer either, the agent should text our operations email — ops@apexfire.com — with the caller's name, number, and address.
+
+Onboarding Specialist: Understood. So routing order is: Dave Kowalski (773-555-0293) → Dispatch (312-555-0200) → Email ops@apexfire.com. Confirmed?
+
+Mike: Confirmed.
+
+Onboarding Specialist: What's the transfer timeout?
+
+Dave: Give it 30 seconds per contact before moving to the next.
+
+Onboarding Specialist: Non-emergency after-hours handling?
+
+Mike: Collect name, number, and the nature of the issue. Tell them we'll call back next business day by 10 AM.
+
+Onboarding Specialist: Good. ServiceTrade constraint — no automated job creation for sprinkler calls?
+
+Mike: Correct. And I want to extend that — no automated job creation for ANY after-hours emergency call. We want to review those manually.
+
+Onboarding Specialist: Noted. Any other integration constraints?
+
+Mike: When the agent creates a message, it should include the caller's full address. We can't dispatch without it.
+
+Onboarding Specialist: Anything else before we finalize?
+
+Dave: Can the agent identify itself as Clara from Apex Fire? Not just "Apex Fire"?
+
+Onboarding Specialist: Absolutely. The greeting will say "Hi, you've reached Apex Fire Protection, powered by Clara."
+
+Mike: Perfect. That's everything.

@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clara Pipeline — Dashboard</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap');
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #1a1a24;
+    --border: #2a2a3a;
+    --accent: #7c6fff;
+    --accent2: #ff6b9d;
+    --green: #4ade80;
+    --yellow: #fbbf24;
+    --red: #f87171;
+    --text: #e8e8f0;
+    --muted: #6b6b88;
+    --mono: 'Space Mono', monospace;
+    --sans: 'Syne', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(124,111,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(124,111,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrapper { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── Header ── */
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 20px 0;
+    position: sticky;
+    top: 0;
+    background: rgba(10,10,15,0.92);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+  }
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .logo-icon {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .logo-text { font-size: 18px; font-weight: 800; letter-spacing: -0.5px; }
+  .logo-text span { color: var(--accent); }
+  .header-badge {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+
+  /* ── Hero stats ── */
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin: 32px 0;
+  }
+  .stat-cell {
+    background: var(--surface);
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    animation: fadeUp 0.5s ease both;
+  }
+  .stat-cell:nth-child(1) { animation-delay: 0.1s; }
+  .stat-cell:nth-child(2) { animation-delay: 0.2s; }
+  .stat-cell:nth-child(3) { animation-delay: 0.3s; }
+  .stat-cell:nth-child(4) { animation-delay: 0.4s; }
+  .stat-cell::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .stat-cell:hover::after { opacity: 1; }
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .stat-value {
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--text);
+  }
+  .stat-value.green { color: var(--green); }
+  .stat-value.accent { color: var(--accent); }
+  .stat-sub {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+
+  /* ── Section title ── */
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .section-title h2 {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--muted);
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── Account cards ── */
+  .accounts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(520px, 1fr));
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .account-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    animation: fadeUp 0.6s ease both;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .account-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .account-card:nth-child(1) { animation-delay: 0.15s; }
+  .account-card:nth-child(2) { animation-delay: 0.25s; }
+
+  .card-header {
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .card-company { font-size: 18px; font-weight: 700; }
+  .card-id {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .version-badges { display: flex; gap: 6px; flex-shrink: 0; }
+  .badge {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 6px;
+    border: 1px solid;
+  }
+  .badge-v1 { color: var(--yellow); border-color: var(--yellow); background: rgba(251,191,36,0.08); }
+  .badge-v2 { color: var(--green); border-color: var(--green); background: rgba(74,222,128,0.08); }
+
+  .card-body { padding: 20px 24px; display: flex; flex-direction: column; gap: 16px; }
+
+  .info-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .info-item {}
+  .info-item-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+  .info-item-value { font-size: 13px; font-weight: 600; color: var(--text); }
+
+  .services-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .service-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 3px 8px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--muted);
+  }
+
+  .emergency-box {
+    background: rgba(248,113,113,0.06);
+    border: 1px solid rgba(248,113,113,0.2);
+    border-radius: 10px;
+    padding: 12px 16px;
+  }
+  .emergency-title {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--red);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .emergency-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--red);
+    animation: pulse 2s infinite;
+  }
+  .emergency-item { font-size: 12px; color: var(--text); margin-bottom: 4px; padding-left: 12px; position: relative; }
+  .emergency-item::before { content: '→'; position: absolute; left: 0; color: var(--red); font-size: 10px; }
+
+  /* ── Diff viewer ── */
+  .diff-section { margin-bottom: 40px; }
+  .diff-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    animation: fadeUp 0.6s ease 0.3s both;
+  }
+  .diff-header {
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .diff-title { font-size: 14px; font-weight: 700; }
+  .diff-meta { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+  .diff-summary {
+    padding: 14px 24px;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--muted);
+    background: var(--surface2);
+    font-style: italic;
+  }
+  .diff-list { padding: 8px 0; }
+  .diff-row {
+    padding: 12px 24px;
+    border-bottom: 1px solid rgba(42,42,58,0.5);
+    display: grid;
+    grid-template-columns: 220px 1fr 1fr;
+    gap: 16px;
+    align-items: start;
+    font-size: 12px;
+    transition: background 0.15s;
+  }
+  .diff-row:last-child { border-bottom: none; }
+  .diff-row:hover { background: var(--surface2); }
+  .diff-field {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    word-break: break-all;
+  }
+  .diff-old {
+    color: var(--red);
+    background: rgba(248,113,113,0.06);
+    border: 1px solid rgba(248,113,113,0.15);
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-family: var(--mono);
+    font-size: 11px;
+    line-height: 1.5;
+    word-break: break-word;
+  }
+  .diff-old::before { content: '− '; opacity: 0.6; }
+  .diff-new {
+    color: var(--green);
+    background: rgba(74,222,128,0.06);
+    border: 1px solid rgba(74,222,128,0.15);
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-family: var(--mono);
+    font-size: 11px;
+    line-height: 1.5;
+    word-break: break-word;
+  }
+  .diff-new::before { content: '+ '; opacity: 0.6; }
+
+  /* ── Agent prompt viewer ── */
+  .prompt-section { margin-bottom: 40px; }
+  .prompt-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 0; }
+  .prompt-tab {
+    font-family: var(--mono);
+    font-size: 12px;
+    padding: 10px 20px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    background: transparent;
+    color: var(--muted);
+    transition: all 0.15s;
+    margin-bottom: -1px;
+  }
+  .prompt-tab.active {
+    color: var(--text);
+    background: var(--surface);
+    border-color: var(--border);
+    border-bottom-color: var(--surface);
+  }
+  .prompt-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 16px 16px;
+    padding: 24px;
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.8;
+    color: #c8c8e0;
+    white-space: pre-wrap;
+    max-height: 400px;
+    overflow-y: auto;
+    animation: fadeUp 0.4s ease both;
+  }
+  .prompt-box::-webkit-scrollbar { width: 6px; }
+  .prompt-box::-webkit-scrollbar-track { background: transparent; }
+  .prompt-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* ── Unknown fields ── */
+  .unknowns-card {
+    background: rgba(251,191,36,0.04);
+    border: 1px solid rgba(251,191,36,0.2);
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin-bottom: 40px;
+    animation: fadeUp 0.6s ease 0.4s both;
+  }
+  .unknowns-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--yellow);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+  .unknown-item {
+    font-size: 13px;
+    color: var(--text);
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(251,191,36,0.1);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .unknown-item:last-child { border-bottom: none; }
+  .unknown-item::before {
+    content: '⚠';
+    font-size: 11px;
+    color: var(--yellow);
+    flex-shrink: 0;
+  }
+
+  /* ── Footer ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 24px 0;
+    margin-top: 40px;
+  }
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-text { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+
+  /* ── Animations ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.3; }
+  }
+
+  /* ── Scrollbar ── */
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    .stats-bar { grid-template-columns: repeat(2,1fr); }
+    .accounts-grid { grid-template-columns: 1fr; }
+    .diff-row { grid-template-columns: 1fr; }
+    .info-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-icon">🎙</div>
+      <div class="logo-text">Clara <span>Pipeline</span></div>
+    </div>
+    <div class="header-badge">v2.0 · intern assignment</div>
+  </div>
+</header>
+
+<div class="wrapper" style="padding-top:32px; padding-bottom:40px;">
+
+  <!-- Stats bar -->
+  <div class="stats-bar">
+    <div class="stat-cell">
+      <div class="stat-label">Accounts Processed</div>
+      <div class="stat-value accent" id="stat-accounts">1</div>
+      <div class="stat-sub">of 5 target</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">Pipeline A Runs</div>
+      <div class="stat-value green" id="stat-pa">1</div>
+      <div class="stat-sub">v1 agents generated</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">Pipeline B Runs</div>
+      <div class="stat-value green" id="stat-pb">1</div>
+      <div class="stat-sub">v2 agents updated</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">Fields Changed</div>
+      <div class="stat-value" id="stat-changes">13</div>
+      <div class="stat-sub">across all changelogs</div>
+    </div>
+  </div>
+
+  <!-- Accounts -->
+  <div class="section-title"><h2>Accounts</h2></div>
+  <div class="accounts-grid" id="accounts-grid">
+
+    <!-- Ben's Electric Card -->
+    <div class="account-card">
+      <div class="card-header">
+        <div>
+          <div class="card-company">Ben's Electric Solutions</div>
+          <div class="card-id">bens_electric_solutions</div>
+        </div>
+        <div class="version-badges">
+          <span class="badge badge-v1">v1</span>
+          <span class="badge badge-v2">v2 ✓</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="info-row">
+          <div class="info-item">
+            <div class="info-item-label">Business Hours</div>
+            <div class="info-item-value">Mon–Fri 8:00–16:30</div>
+          </div>
+          <div class="info-item">
+            <div class="info-item-label">Timezone</div>
+            <div class="info-item-value">America/Edmonton (MT)</div>
+          </div>
+          <div class="info-item">
+            <div class="info-item-label">Location</div>
+            <div class="info-item-value">Calgary, AB, Canada</div>
+          </div>
+          <div class="info-item">
+            <div class="info-item-label">CRM</div>
+            <div class="info-item-value">Jobber + QuickBooks</div>
+          </div>
+        </div>
+        <div>
+          <div class="info-item-label" style="margin-bottom:8px;">Services Supported</div>
+          <div class="services-list">
+            <span class="service-tag">Service calls</span>
+            <span class="service-tag">EV chargers</span>
+            <span class="service-tag">Panel changes</span>
+            <span class="service-tag">Hot tub hookups</span>
+            <span class="service-tag">Outlet replacement</span>
+            <span class="service-tag">LED lighting</span>
+            <span class="service-tag">Renovations</span>
+            <span class="service-tag">Tenant improvements</span>
+            <span class="service-tag">Custom homes</span>
+            <span class="service-tag">Generator hookups</span>
+          </div>
+        </div>
+        <div class="emergency-box">
+          <div class="emergency-title"><span class="emergency-dot"></span>Emergency Routing</div>
+          <div class="emergency-item">VIP: G&M Pressure Washing (Shelley Manley) — 403-870-8494</div>
+          <div class="emergency-item">Properties: ~20 Chevron/Esso gas stations, Calgary</div>
+          <div class="emergency-item">Collect gas station address → patch to Ben directly</div>
+          <div class="emergency-item">Fallback: take message, call back immediately</div>
+        </div>
+        <div class="info-row">
+          <div class="info-item">
+            <div class="info-item-label">Service Call Fee</div>
+            <div class="info-item-value">$115 CAD call-out</div>
+          </div>
+          <div class="info-item">
+            <div class="info-item-label">Hourly Rate</div>
+            <div class="info-item-value">$98/hr (30-min increments)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Apex Fire Card -->
+    <div class="account-card">
+      <div class="card-header">
+        <div>
+          <div class="card-company">Apex Fire Protection</div>
+          <div class="card-id">apex_fire_protection</div>
+        </div>
+        <div class="version-badges">
+          <span class="badge badge-v1">v1</span>
+          <span class="badge badge-v2">v2 ✓</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="info-row">
+          <div class="info-item">
+            <div class="info-item-label">Business Hours</div>
+            <div class="info-item-value">Mon–Fri 8:00–17:00</div>
+          </div>
+          <div class="info-item">
+            <div class="info-item-label">Timezone</div>
+            <div class="info-item-value">America/Chicago (CT)</div>
+          </div>
+          <div class="info-item">
+            <div class="info-item-label">Location</div>
+            <div class="info-item-value">4820 W Armitage, Chicago IL</div>
+          </div>
+          <div class="info-item">
+            <div class="info-item-label">CRM</div>
+            <div class="info-item-value">ServiceTrade</div>
+          </div>
+        </div>
+        <div>
+          <div class="info-item-label" style="margin-bottom:8px;">Services Supported</div>
+          <div class="services-list">
+            <span class="service-tag">Fire protection</span>
+            <span class="service-tag">Sprinkler systems</span>
+            <span class="service-tag">Fire alarm</span>
+            <span class="service-tag">CO alarm</span>
+            <span class="service-tag">Suppression systems</span>
+            <span class="service-tag">Inspections</span>
+          </div>
+        </div>
+        <div class="emergency-box">
+          <div class="emergency-title"><span class="emergency-dot"></span>Emergency Routing</div>
+          <div class="emergency-item">Priority 1: Dave Kowalski — 773-555-0293</div>
+          <div class="emergency-item">Priority 2: Dispatch — 312-555-0200</div>
+          <div class="emergency-item">Priority 3: Email ops@apexfire.com with full details</div>
+          <div class="emergency-item">Timeout: 30s per contact before escalating</div>
+        </div>
+        <div class="info-row">
+          <div class="info-item">
+            <div class="info-item-label">Emergency Triggers</div>
+            <div class="info-item-value">Sprinkler discharge, Fire alarm, CO alarm, Suppression activation</div>
+          </div>
+          <div class="info-item">
+            <div class="info-item-label">Integration Constraint</div>
+            <div class="info-item-value">No auto ServiceTrade jobs for emergency calls</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Diff Viewer -->
+  <div class="diff-section">
+    <div class="section-title"><h2>Diff Viewer — v1 → v2</h2></div>
+    <div style="display:flex;gap:10px;margin-bottom:12px;">
+      <button class="prompt-tab active" onclick="showDiff('bens')" id="tab-bens">Ben's Electric</button>
+      <button class="prompt-tab" onclick="showDiff('apex')" id="tab-apex">Apex Fire</button>
+    </div>
+    <div class="diff-card">
+      <div class="diff-header">
+        <div class="diff-title" id="diff-title">Ben's Electric Solutions — Changelog</div>
+        <div class="diff-meta" id="diff-meta">Updated: 2026-01-09 · 13 changes</div>
+      </div>
+      <div class="diff-summary" id="diff-summary">
+        13 fields updated: business hours confirmed, pricing added, VIP customer G&M Pressure Washing defined, notification channels confirmed, transfer setup clarified, contact email updated.
+      </div>
+      <div class="diff-list" id="diff-list"></div>
+    </div>
+  </div>
+
+  <!-- Agent Prompt Viewer -->
+  <div class="prompt-section">
+    <div class="section-title"><h2>Agent Prompt Viewer</h2></div>
+    <div class="prompt-tabs">
+      <button class="prompt-tab active" onclick="showPrompt('v1')">v1 — Demo Draft</button>
+      <button class="prompt-tab" onclick="showPrompt('v2')">v2 — Onboarding Final</button>
+    </div>
+    <div class="prompt-box" id="prompt-box"></div>
+  </div>
+
+  <!-- Unresolved items -->
+  <div class="section-title"><h2>Open Questions / Unknowns</h2></div>
+  <div class="unknowns-card">
+    <div class="unknowns-title">⚠ Items pending resolution</div>
+    <div class="unknown-item">Ben's Electric — Ben's second personal number not yet available — transfer destination TBD</div>
+    <div class="unknown-item">Ben's Electric — Greg's full name and contact details not provided (incoming ops manager)</div>
+    <div class="unknown-item">Ben's Electric — Full whitelist of VIP contractor numbers not provided</div>
+    <div class="unknown-item">Apex Fire — Holiday closure schedule not confirmed</div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-text">Clara Pipeline Dashboard · Intern Assignment · Zero-cost stack: Groq + Python + n8n</div>
+    <div class="footer-text">outputs/accounts/ · v1 + v2 versioned · changelog per account</div>
+  </div>
+</footer>
+
+<script>
+const DIFFS = {
+  bens: {
+    title: "Ben's Electric Solutions — Changelog",
+    meta: "Updated: 2026-01-09 · 13 changes",
+    summary: "13 fields updated: business hours confirmed, pricing added, VIP customer G&M Pressure Washing defined, notification channels confirmed, transfer setup clarified, contact email updated.",
+    changes: [
+      { field: "business_hours.end_time", old: "17:00", new: "16:30", },
+      { field: "contact_email", old: "ben@benselectricsolutionsteam.com", new: "info@benselectricsolutionsteam.com" },
+      { field: "notification_email", old: "null", new: "info@benselectricsolutionsteam.com" },
+      { field: "notification_sms", old: "null", new: "Ben's main business number" },
+      { field: "pricing.service_call_fee", old: "null", new: "$115 CAD" },
+      { field: "pricing.hourly_rate", old: "null", new: "$98/hr (30-min increments)" },
+      { field: "vip_customers", old: "null", new: "G&M Pressure Washing – Shelley Manley – 403-870-8494" },
+      { field: "emergency_routing[0].phone", old: "main business number", new: "Ben's second number (pending)" },
+      { field: "call_transfer_rules.timeout_seconds", old: "null", new: "30" },
+      { field: "call_setup.device", old: "null", new: "Android – forward-on-no-answer" },
+      { field: "after_hours_flow_summary", old: "Generic after-hours flow", new: "VIP G&M patched to Ben. All others: collect + follow up next business day." },
+      { field: "office_hours_flow_summary", old: "Collect details and send to Ben", new: "Collect details, mention pricing only if asked, transfer if requested, send post-call email+SMS" },
+      { field: "questions_or_unknowns", old: "5 unknowns (hours, pricing, VIP, Greg, transfer number)", new: "3 unknowns remaining (second number, Greg, VIP list)" },
+    ]
+  },
+  apex: {
+    title: "Apex Fire Protection — Changelog",
+    meta: "Updated: 2026-01-22 · 8 changes",
+    summary: "8 fields updated: Dave Kowalski phone number corrected, CO alarm and suppression added to emergency triggers, email fallback added, transfer timeout confirmed at 30s, integration constraints expanded.",
+    changes: [
+      { field: "emergency_routing[0].phone_number", old: "312-555-0147", new: "773-555-0293" },
+      { field: "emergency_definition", old: "Sprinkler discharge, Fire alarm", new: "Sprinkler discharge, Fire alarm, CO alarm, Suppression activation" },
+      { field: "emergency_routing[2]", old: "null", new: "Email ops@apexfire.com (3rd fallback)" },
+      { field: "call_transfer_rules.timeout_seconds", old: "null", new: "30" },
+      { field: "non_emergency.after_hours", old: "Defer to next business day", new: "Collect name, number, issue. Follow up by 10 AM next business day." },
+      { field: "integration_constraints", old: "No sprinkler jobs in ServiceTrade", new: "No auto-create jobs for ANY emergency call after hours" },
+      { field: "holidays", old: "null", new: "NY, Memorial Day, Independence, Labor Day, Thanksgiving, Christmas" },
+      { field: "agent_greeting", old: "Apex Fire Protection", new: "Apex Fire Protection, powered by Clara" },
+    ]
+  }
+};
+
+const PROMPTS = {
+  v1: `You are Clara, the virtual receptionist for Ben's Electric Solutions,
+an electrical contracting company based in Calgary, Alberta, Canada.
+
+## BUSINESS HOURS
+Monday to Friday, approximately 8:00 AM to 5:00 PM Mountain Time.
+
+## DURING OFFICE HOURS FLOW
+1. Greet the caller warmly:
+   "Thank you for calling Ben's Electric Solutions, this is Clara.
+    How can I help you today?"
+
+2. Listen and understand the purpose of their call.
+
+3. Collect their full name and best callback number.
+
+4. If they ask about pricing — share only when asked.
+
+5. Let them know Ben or a team member will be in touch shortly.
+
+6. Ask: "Is there anything else I can help you with today?"
+
+7. Close: "Thank you for calling Ben's Electric Solutions.
+   We'll be in touch soon. Have a great day!"
+
+## AFTER HOURS FLOW
+1. "Thank you for calling Ben's Electric Solutions. Our office is
+   currently closed — hours are Mon–Fri, 8 AM to 5 PM Mountain Time."
+
+2. Ask the purpose of their call.
+
+3. Ask if this is an emergency.
+
+4. If EMERGENCY from known client: collect name, number, address.
+   Attempt to connect with Ben.
+
+5. If transfer fails: "I wasn't able to reach Ben directly, but I've
+   taken your details and someone will call back as soon as possible."
+
+6. If NON-EMERGENCY: collect details.
+   "A team member will follow up next business day."
+
+7. Ask: "Is there anything else I can help you with?"
+
+8. Close warmly.
+
+## RULES
+- Never mention function calls, tools, or AI systems to callers.
+- Only collect what is needed for routing and follow-up.
+- Keep tone warm, calm, and professional.
+
+[v1 — Based on demo call. Pricing and VIP routing TBD.]`,
+
+  v2: `You are Clara, the virtual receptionist for Ben's Electric Solutions,
+an electrical contracting company based in Calgary, Alberta, Canada.
+
+## BUSINESS HOURS
+Monday to Friday, 8:00 AM to 4:30 PM Mountain Time (America/Edmonton).
+
+## PRICING — Share ONLY if the caller asks
+- Service call fee: $115 CAD (covers travel to your location)
+- Labour: $98/hr billed in 30-minute increments ($49 per half hour)
+- Do NOT proactively mention pricing on every call.
+
+## DURING OFFICE HOURS FLOW
+1. "Thank you for calling Ben's Electric Solutions, this is Clara.
+    How can I help you today?"
+2. Understand the purpose of their call.
+3. Collect full name and best callback number.
+4. Share pricing only if asked.
+5. "Someone will be in touch shortly to confirm next steps."
+6. If caller insists on live person: attempt transfer to Ben.
+7. If transfer fails: "I wasn't able to reach Ben right now, but
+   he'll follow up with you as soon as possible."
+8. "Is there anything else I can help you with today?"
+9. "Thank you for calling Ben's Electric Solutions. Have a great day!"
+
+## AFTER HOURS FLOW
+1. "Thank you for calling Ben's Electric Solutions. Our office is
+   closed — we're available Mon–Fri, 8 AM to 4:30 PM Mountain Time."
+2. Ask purpose of call.
+3. Determine: emergency or non-emergency?
+
+IF EMERGENCY — G&M Pressure Washing / Shelley Manley / Chevron or Esso:
+→ This is your VIP after-hours emergency contact.
+→ Collect: caller name, callback number, ADDRESS of the gas station.
+→ "I'm going to connect you with Ben right now. Please hold."
+→ Attempt transfer to Ben's direct line.
+→ If transfer fails: "I've taken all your details and Ben will
+   call you back immediately."
+
+IF OTHER EMERGENCY:
+→ Collect name, number, address of issue.
+→ "I've taken your details and Ben will follow up as soon as possible."
+→ Do NOT attempt transfer for unknown callers after hours.
+
+IF NON-EMERGENCY:
+→ Collect name, number, brief description.
+→ "A team member will follow up next business day."
+
+4. "Is there anything else I can help you with?"
+5. Close warmly.
+
+## RULES
+- NEVER mention function calls, tools, APIs, or technical terms to callers.
+- Never make up pricing or scheduling commitments.
+- If uncertain: "I'll make sure Ben follows up with you on that."
+- Keep tone warm, calm, professional.
+
+[v2 — Confirmed after onboarding call. Go-live: Jan 11-12, 2026.]`
+};
+
+function showDiff(key) {
+  const d = DIFFS[key];
+  document.getElementById('diff-title').textContent = d.title;
+  document.getElementById('diff-meta').textContent = d.meta;
+  document.getElementById('diff-summary').textContent = d.summary;
+  const list = document.getElementById('diff-list');
+  list.innerHTML = d.changes.map(c => `
+    <div class="diff-row">
+      <div class="diff-field">${c.field}</div>
+      <div class="diff-old">${c.old}</div>
+      <div class="diff-new">${c.new}</div>
+    </div>`).join('');
+  document.getElementById('tab-bens').classList.toggle('active', key==='bens');
+  document.getElementById('tab-apex').classList.toggle('active', key==='apex');
+}
+
+function showPrompt(v) {
+  document.getElementById('prompt-box').textContent = PROMPTS[v];
+  document.querySelectorAll('.prompt-tab').forEach((t,i) => {
+    t.classList.toggle('active', (v==='v1' && i===0) || (v==='v2' && i===1));
+  });
+}
+
+// Init
+showDiff('bens');
+showPrompt('v1');
+</script>
+</body>
+</html>
