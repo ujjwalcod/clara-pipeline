@@ -18,6 +18,10 @@ DASHBOARD:
 
 
 
+retell agent 
+<img width="1919" height="908" alt="image" src="https://github.com/user-attachments/assets/29a62a47-6d92-499d-beec-a8f2a27b52fb" />
+
+
 
 > **Demo Call → Agent v1 → Onboarding → Agent v2**  
 > A zero-cost, reproducible pipeline that converts call transcripts into deployable Retell AI voice agent configurations.
