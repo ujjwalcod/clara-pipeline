@@ -1,5 +1,14 @@
 # Clara Answers – Automation Pipeline
 
+
+
+VIDEO LINK:
+https://www.loom.com/share/03833377d20d48f38c24ea4de1f7b34f
+
+<img width="1914" height="907" alt="image" src="https://github.com/user-attachments/assets/ca7cb98d-6294-4749-a4fe-d30e5f5662a4" />
+
+
+
 > **Demo Call → Agent v1 → Onboarding → Agent v2**  
 > A zero-cost, reproducible pipeline that converts call transcripts into deployable Retell AI voice agent configurations.
 
